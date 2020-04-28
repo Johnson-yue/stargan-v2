@@ -58,6 +58,7 @@ def calculate_metrics(nets, args, step, mode):
             os.makedirs(path_fake)
 
             lpips_values = []
+            iter_ref = iter(loader_ref)
             print('Generating images and calculating LPIPS for %s...' % task)
             for i, x_src in enumerate(tqdm(loader_src, total=len(loader_src))):
                 N = x_src.size(0)
@@ -137,7 +138,7 @@ def calculate_fid_for_all_tasks(args, domains, step, mode):
             fid_values['FID_%s/%s' % (mode, task)] = fid_value
 
     # calculate the average FID for all tasks
-    fid_mean = 0
+    fid_mean = 0 
     for _, value in fid_values.items():
         fid_mean += value / len(fid_values)
     fid_values['FID_%s/mean' % mode] = fid_mean
